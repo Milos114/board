@@ -35,32 +35,44 @@ class LaneIndexTest extends TestCase
         );
 
         $response = $this->get("api/{$this->getApiVersion()}/lanes");
-            $response->assertJsonStructure([
-                'data' => [
-                    '0' => [
-                        'id',
-                        'name',
-                        'tickets_count',
-                        'tickets' => [
-                            '0' => [
+        $response->assertJsonStructure([
+            'data' => [
+                '0' => [
+                    'id',
+                    'name',
+                    'tickets_count',
+                    'tickets' => [
+                        '0' => [
+                            'id',
+                            'user' => [
                                 'id',
-                                'user' => [
-                                    'id',
-                                    'name',
-                                    'email',
-                                ],
-                                'priority' => [
-                                    'id',
-                                    'name',
-                                ],
-                                'title',
-                                'description',
-                                'created_at',
+                                'name',
+                                'email',
                             ],
+                            'priority' => [
+                                'id',
+                                'name',
+                            ],
+                            'title',
+                            'description',
+                            'created_at',
                         ],
                     ],
                 ],
-            ]);
+            ],
+        ])->assertJsonFragment([
+            'id' => $lane->id,
+            'name' => 'to_do',
+            'tickets_count' => 3,
+        ])->assertJsonFragment([
+            'id' => $lane2->id,
+            'name' => 'in_progress',
+            'tickets_count' => 2,
+        ])->assertJsonFragment([
+            'id' => $lane3->id,
+            'name' => 'done',
+            'tickets_count' => 1,
+        ]);
     }
 
     public function test_unauthenticated_user_cannot_list_lanes(): void
