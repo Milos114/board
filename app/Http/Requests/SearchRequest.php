@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class SearchRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'filter' => ['array', function ($attribute, $value, $fail) {
+                $allowedKeys = ['search', 'state', 'user'];
+                foreach (array_keys($value) as $key) {
+                    if (!in_array($key, $allowedKeys, true)) {
+                        $fail("The {$attribute} field contains an invalid key: {$key}.");
+                    }
+                }
+            }],
+            'filter.search' => ['nullable', 'string'],
+            'filter.state' => ['nullable', 'integer'],
+            'filter.user' => ['nullable', 'integer'],
+        ];
+    }
+}
