@@ -6,6 +6,9 @@ This is a simple ticket board service built with Laravel 11. It has Lanes, Ticke
 ### Installation
 - git clone 
 - composer install
+- cp .env.example .env
+- php artisan key:generate
+- in .env set DB_CONNECTION=mysql
 - php artisan serve
 - php artisan test
 
