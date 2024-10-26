@@ -11,6 +11,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @group Tickets
+ *
+ * API endpoints for managing tickets.
+ */
 class TicketController extends Controller
 {
     public function index(SearchRequest $request): AnonymousResourceCollection

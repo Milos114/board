@@ -11,6 +11,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @group Users
+ *
+ * API endpoints for managing users.
+ */
 class UserController extends Controller
 {
     public function index(): AnonymousResourceCollection

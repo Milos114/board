@@ -10,6 +10,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @group Priorities
+ *
+ * API endpoints for managing priorities.
+ */
 class PriorityController extends Controller
 {
     public function index(): AnonymousResourceCollection
