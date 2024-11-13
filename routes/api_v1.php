@@ -4,10 +4,14 @@ use App\Http\Controllers\API\V1\LaneController;
 use App\Http\Controllers\API\V1\PriorityController;
 use App\Http\Controllers\API\V1\TicketController;
 use App\Http\Controllers\API\V1\UserController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Middleware\UserCreateMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:api')->group(function () {
+
+    Route::get('me', [RegisterController::class, 'me']);
+
     // Users
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');

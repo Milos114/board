@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
  * @group Auth
@@ -17,8 +18,9 @@ use Illuminate\Validation\ValidationException;
 class RegisterController extends Controller
 {
     /**
+     * @param Request $request
+     * @return JsonResponse
      * @throws ValidationException
-     * @unauthenticated
      */
     public function register(Request $request): JsonResponse
     {
@@ -35,10 +37,11 @@ class RegisterController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
-        $success['token'] = $user->createToken('MyApp')->plainTextToken;
+        User::create($input);
 
-        return response()->json($success);
+        return $this->respondWithToken(
+            auth()->attempt($request->only('email', 'password'))
+        );
     }
 
     /**
@@ -46,12 +49,38 @@ class RegisterController extends Controller
      */
     public function login(Request $request): JsonResponse
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            $success['token'] = Auth::user()->createToken('MyApp')->plainTextToken;
+        $credentials = request(['email', 'password']);
 
-            return response()->json($success);
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return response()->json(['error' => 'Unauthorised'], 401);
+        return $this->respondWithToken($token);
+    }
+
+    public function me(): JsonResponse
+    {
+        return response()->json(auth()->user());
+    }
+
+    public function logout(): JsonResponse
+    {
+        JWTAuth::invalidate(JWTAuth::getToken());
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    public function refresh(): JsonResponse
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+    protected function respondWithToken($token): JsonResponse
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 }
