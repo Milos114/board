@@ -27,6 +27,7 @@ class TicketRequest extends FormRequest
             'description' => 'required|string',
             'lane_id' => 'nullable|numeric',
             'priority_id' => 'nullable|numeric',
+            'attachments' => 'nullable|array',
         ];
     }
 }

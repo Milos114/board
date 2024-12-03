@@ -9,6 +9,7 @@ use App\Traits\Loggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Pipeline;
 
 class Ticket extends Model
@@ -36,6 +37,11 @@ class Ticket extends Model
     public function state(): BelongsTo
     {
         return $this->belongsTo(Lane::class);
+    }
+
+    public function attachments(): HasMany
+    {
+        return $this->hasMany(Attachment::class);
     }
 
     public function scopeFilter($query)

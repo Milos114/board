@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Actions\TicketCreateAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchRequest;
 use App\Http\Requests\TicketRequest;
@@ -25,9 +26,9 @@ class TicketController extends Controller
         return TicketResource::collection($tickets);
     }
 
-    public function store(TicketRequest $request): JsonResponse
+    public function store(TicketRequest $request, TicketCreateAction $action): JsonResponse
     {
-        $ticket = Ticket::create($request->validated());
+        $ticket = $action->execute($request->validated());
 
         return response()->json($ticket, Response::HTTP_CREATED);
     }
