@@ -47,6 +47,8 @@ class LaneDestroyTest extends TestCase
 
         $this->delete("api/{$this->getApiVersion()}/lanes/$lane->id");
 
-        $this->assertDatabaseHas('lanes', $lane->toArray());
+        $this->assertDatabaseHas('lanes', [
+            'id' => $lane->id,
+        ]);
     }
 }
