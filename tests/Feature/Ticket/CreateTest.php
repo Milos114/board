@@ -21,6 +21,7 @@ class CreateTest extends TestCase
         $state = Lane::factory()->create();
         $priority = Priority::factory()->create();
 
+
         $response = $this->post("api/{$this->getApiVersion()}/tickets", [
             'user_id' => $user->id,
             'title' => 'My ticket',
