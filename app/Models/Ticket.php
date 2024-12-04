@@ -34,7 +34,7 @@ class Ticket extends Model
         return $this->belongsTo(Priority::class);
     }
 
-    public function state(): BelongsTo
+    public function lane(): BelongsTo
     {
         return $this->belongsTo(Lane::class);
     }

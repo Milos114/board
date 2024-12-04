@@ -21,7 +21,11 @@ class TicketController extends Controller
 {
     public function index(SearchRequest $request): AnonymousResourceCollection
     {
-        $tickets = Ticket::with(['user', 'state'])->filter();
+        $tickets = Ticket::with([
+            'user',
+            'lane',
+            'attachments'
+        ])->filter();
 
         return TicketResource::collection($tickets);
     }
@@ -35,6 +39,12 @@ class TicketController extends Controller
 
     public function show(Ticket $ticket): JsonResponse
     {
+        $ticket->load([
+            'user',
+            'lane',
+            'attachments'
+        ]);
+
         return response()->json(TicketResource::make($ticket));
     }
 
