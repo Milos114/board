@@ -14,7 +14,7 @@ class AttachmentResource extends JsonResource
             'id' => $this->id,
             'uploaded_by' => $this->uploaded_by,
             'file_name' => $this->file_name,
-            'file_path' => $this->file_path,
+            'file_path' => asset('storage/' . $this->file_path),
             'mime_type' => $this->mime_type,
             'file_hash' => $this->file_hash,
             'file_size' => $this->file_size,
