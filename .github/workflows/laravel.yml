@@ -46,4 +46,4 @@ jobs:
         DB_PASSWORD: root
       run: |
         php artisan jwt:secret
-        php artisan test
+        php artisan test --parallel
