@@ -26,7 +26,7 @@ class LaneStoreRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                'unique:lanes,name',
+                Rule::unique('lanes', 'name')->ignore($this->route('lane')?->id),
                 Rule::in(['back_log', 'to_do', 'in_progress', 'done'])
             ],
         ];

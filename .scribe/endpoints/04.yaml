@@ -1,17 +1,17 @@
-name: Lanes
+name: Priorities
 description: |-
 
-  API endpoints for managing lanes.
+  API endpoints for managing priorities.
 endpoints:
   -
     httpMethods:
       - GET
-    uri: api/v1/lanes
+    uri: api/v1/priorities
     metadata:
-      groupName: Lanes
+      groupName: Priorities
       groupDescription: |-
 
-        API endpoints for managing lanes.
+        API endpoints for managing priorities.
       subgroup: ''
       subgroupDescription: ''
       title: ''
@@ -43,7 +43,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer cae86Z6Vkva3hf4dPD51Ebg'
+      - 'Bearer 3VEadP8abfZhv664keg5c1D'
     controller: null
     method: null
     route: null
@@ -51,12 +51,12 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/v1/lanes
+    uri: api/v1/priorities
     metadata:
-      groupName: Lanes
+      groupName: Priorities
       groupDescription: |-
 
-        API endpoints for managing lanes.
+        API endpoints for managing priorities.
       subgroup: ''
       subgroupDescription: ''
       title: ''
@@ -71,38 +71,28 @@ endpoints:
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters:
-      name:
-        name: name
-        description: ''
-        required: true
-        example: eum
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        custom: []
-    cleanBodyParameters:
-      name: eum
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses: []
     responseFields: []
     auth:
       - headers
       - Authorization
-      - 'Bearer ack4eZafP66D3Vd8vg5hE1b'
+      - 'Bearer VZkbh3a486evfPEadgD651c'
     controller: null
     method: null
     route: null
     custom: []
   -
     httpMethods:
-      - GET
-    uri: 'api/v1/lanes/{lane_id}'
+      - PUT
+    uri: 'api/v1/priorities/{id}'
     metadata:
-      groupName: Lanes
+      groupName: Priorities
       groupDescription: |-
 
-        API endpoints for managing lanes.
+        API endpoints for managing priorities.
       subgroup: ''
       subgroupDescription: ''
       title: ''
@@ -114,17 +104,76 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      lane_id:
-        name: lane_id
-        description: 'The ID of the lane.'
+      id:
+        name: id
+        description: 'The ID of the priority.'
         required: true
-        example: 8
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
     cleanUrlParameters:
-      lane_id: 8
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: aut
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: aut
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3kDcP6eah451V8gvZb6afEd'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/priorities/{id}'
+    metadata:
+      groupName: Priorities
+      groupDescription: |-
+
+        API endpoints for managing priorities.
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the priority.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -144,63 +193,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer ked84abvZ6PagV3hfD156Ec'
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - PUT
-    uri: 'api/v1/lanes/{lane_id}'
-    metadata:
-      groupName: Lanes
-      groupDescription: |-
-
-        API endpoints for managing lanes.
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: true
-      custom: []
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      lane_id:
-        name: lane_id
-        description: 'The ID of the lane.'
-        required: true
-        example: 8
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        custom: []
-    cleanUrlParameters:
-      lane_id: 8
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      name:
-        name: name
-        description: ''
-        required: true
-        example: ut
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        custom: []
-    cleanBodyParameters:
-      name: ut
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer hD54f6cVkdPEag8Zaev36b1'
+      - 'Bearer e4aZEV6kbPaf5v6gh138dDc'
     controller: null
     method: null
     route: null
@@ -208,12 +201,12 @@ endpoints:
   -
     httpMethods:
       - DELETE
-    uri: 'api/v1/lanes/{lane_id}'
+    uri: 'api/v1/priorities/{id}'
     metadata:
-      groupName: Lanes
+      groupName: Priorities
       groupDescription: |-
 
-        API endpoints for managing lanes.
+        API endpoints for managing priorities.
       subgroup: ''
       subgroupDescription: ''
       title: ''
@@ -225,17 +218,18 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      lane_id:
-        name: lane_id
-        description: 'The ID of the lane.'
+      id:
+        name: id
+        description: 'The ID of the priority.'
         required: true
-        example: 8
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
     cleanUrlParameters:
-      lane_id: 8
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -246,7 +240,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer VgEbDPe46k5Zadf6vc8a1h3'
+      - 'Bearer Vd54P68ahe1kb3DZvEfa6gc'
     controller: null
     method: null
     route: null

@@ -16,9 +16,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -30,47 +31,54 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: ut
+        example: vitae
         type: string
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
       email:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: olson.jared@example.net
+        example: emmie.hermann@example.net
         type: string
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
       password:
         name: password
         description: ''
         required: true
-        example: hic
+        example: libero
         type: string
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
       c_password:
         name: c_password
         description: 'The value and <code>password</code> must match.'
         required: true
-        example: rerum
+        example: ipsum
         type: string
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
     cleanBodyParameters:
-      name: ut
-      email: olson.jared@example.net
-      password: hic
-      c_password: rerum
+      name: vitae
+      email: emmie.hermann@example.net
+      password: libero
+      c_password: ipsum
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer Z6E63aV45cvgbfheDP1a8dk'
     controller: null
     method: null
     route: null
@@ -103,6 +111,87 @@ endpoints:
     responses: []
     responseFields: []
     auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/logout
+    metadata:
+      groupName: Auth
+      groupDescription: |-
+
+        API endpoints for registering and logging in users.
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer EhZf1aD3Pbkc86eg4v56Vad'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/v1/me
+    metadata:
+      groupName: Auth
+      groupDescription: |-
+
+        API endpoints for registering and logging in users.
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer a6ef4hgk6EcD3bVZ81dPv5a'
     controller: null
     method: null
     route: null
