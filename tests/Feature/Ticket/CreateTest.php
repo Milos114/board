@@ -17,23 +17,23 @@ class CreateTest extends TestCase
 
     public function test_ticket_can_be_created(): void
     {
+        $this->withoutExceptionHandling();
         $this->actingAs($user = User::factory()->create());
-        $state = Lane::factory()->create();
+        $lane = Lane::factory()->create();
         $priority = Priority::factory()->create();
-
 
         $response = $this->post("api/{$this->getApiVersion()}/tickets", [
             'user_id' => $user->id,
             'title' => 'My ticket',
             'description' => 'Content of ticket',
-            'lane_id' => $state->id,
+            'lane_id' => $lane->id,
             'priority_id' => $priority->id,
         ]);
 
         $response->assertStatus(Response::HTTP_CREATED);
         $this->assertDatabaseHas('tickets', [
             'user_id' => $user->id,
-            'lane_id' => $state->id,
+            'lane_id' => $lane->id,
             'priority_id' => $priority->id,
         ]);
     }

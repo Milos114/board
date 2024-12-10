@@ -6,6 +6,7 @@ use App\Actions\TicketCreateAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchRequest;
 use App\Http\Requests\TicketRequest;
+use App\Http\Requests\TicketStoreRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\JsonResponse;
@@ -30,7 +31,7 @@ class TicketController extends Controller
         return TicketResource::collection($tickets);
     }
 
-    public function store(TicketRequest $request, TicketCreateAction $action): JsonResponse
+    public function store(TicketStoreRequest $request, TicketCreateAction $action): JsonResponse
     {
         $ticket = $action->execute($request->validated());
 

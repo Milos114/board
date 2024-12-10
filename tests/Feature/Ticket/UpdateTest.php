@@ -14,16 +14,16 @@ class UpdateTest extends TestCase
     public function test_ticket_can_be_updated(): void
     {
         $this->actingAs($user = User::factory()->create());
-        $state = Lane::factory()->create();
+        $lane = Lane::factory()->create();
         $ticket = $user->tickets()->create([
             'title' => 'My ticket',
             'description' => 'Content of ticket',
-            'state_id' => $state->id,
+            'lane_id' => $lane->id,
         ]);
 
         $this->put("api/{$this->getApiVersion()}/tickets/$ticket->id", [
             'user_id' => $user->id,
-            'state_id' => $state->id,
+            'lane_id' => $lane->id,
             'title' => 'Updated ticket',
             'description' => 'Updated content of ticket',
         ])->assertOk();
@@ -48,6 +48,42 @@ class UpdateTest extends TestCase
         ], ['Accept' => 'application/json']);
 
         $response->assertUnauthorized();
+    }
+
+    public function test_ticket_can_change_status_from_backlog_to_to_do(): void
+    {
+        $this->actingAs($user = User::factory()->create());
+        $backlog = Lane::factory()->create(['name' => 'back_log']);
+        $toDo = Lane::factory()->create(['name' => 'to_do']);
+        $ticket = $user->tickets()->create([
+            'title' => 'My ticket',
+            'description' => 'Content of ticket',
+            'lane_id' => $backlog->id,
+        ]);
+
+        $this->put("api/{$this->getApiVersion()}/tickets/$ticket->id", [
+            'lane_id' => $toDo->id,
+            'title' => 'Updated ticket',
+            'description' => 'Updated content of ticket',
+        ])->assertOk();
+    }
+
+    public function test_ticket_can_not_change_status_from_done_to_backlog(): void
+    {
+        $this->actingAs($user = User::factory()->create());
+        $backlog = Lane::factory()->create(['name' => 'back_log']);
+        $done = Lane::factory()->create(['name' => 'done']);
+        $ticket = $user->tickets()->create([
+            'title' => 'My ticket',
+            'description' => 'Content of ticket',
+            'lane_id' => $done->id,
+        ]);
+
+        $this->put("api/{$this->getApiVersion()}/tickets/$ticket->id", [
+            'lane_id' => $backlog->id,
+            'title' => 'Updated ticket',
+            'description' => 'Updated content of ticket',
+        ])->assertSessionHasErrors('lane_id');
     }
 
     public function test_ticket_update_requires_title_and_description(): void

@@ -37,4 +37,23 @@ class LaneCreateTest extends TestCase
 
         $response->assertSessionHasErrors('name');
     }
+
+    public function test_lane_name_must_be_unique(): void
+    {
+        $this->actingAs(User::factory()->create());
+        $lane = Lane::factory()->create();
+
+        $response = $this->post("api/{$this->getApiVersion()}/lanes", $lane->toArray());
+
+        $response->assertSessionHasErrors('name');
+    }
+
+    public function test_lane_name_must_be_valid(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $response = $this->post("api/{$this->getApiVersion()}/lanes", ['name' => 'invalid']);
+
+        $response->assertSessionHasErrors('name');
+    }
 }

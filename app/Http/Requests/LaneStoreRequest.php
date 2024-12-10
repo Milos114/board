@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class LaneStoreRequest extends FormRequest
 {
@@ -22,7 +23,12 @@ class LaneStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
+            'name' => [
+                'required',
+                'string',
+                'unique:lanes,name',
+                Rule::in(['back_log', 'to_do', 'in_progress', 'done'])
+            ],
         ];
     }
 }

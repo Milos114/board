@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\LaneTransitionRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TicketRequest extends FormRequest
@@ -25,7 +26,7 @@ class TicketRequest extends FormRequest
             'user_id' => 'nullable|exists:users,id',
             'title' => 'required|string',
             'description' => 'required|string',
-            'lane_id' => 'nullable|numeric',
+            'lane_id' => ['nullable', 'numeric', new LaneTransitionRule($this->route('ticket'))],
             'priority_id' => 'nullable|numeric',
             'attachments' => 'nullable|array',
         ];
