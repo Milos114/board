@@ -9,10 +9,10 @@ use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Translation\PotentiallyTranslatedString;
 
-class LaneTransitionRule implements ValidationRule
+readonly class LaneTransitionRule implements ValidationRule
 {
 
-    public function __construct(private readonly ?Ticket $ticket)
+    public function __construct(private ?Ticket $ticket)
     {
     }
 
