@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LaneStoreRequest;
-use App\Http\Requests\UpdateLaneRequest;
+use App\Http\Requests\LaneUpdateRequest;
 use App\Http\Resources\LaneResource;
 use App\Models\Lane;
 use Illuminate\Http\JsonResponse;
@@ -37,7 +37,7 @@ class LaneController extends Controller
         return LaneResource::make($lane);
     }
 
-    public function update(UpdatelaneRequest $request, Lane $lane): JsonResponse
+    public function update(LaneUpdateRequest $request, Lane $lane): JsonResponse
     {
         $lane->update($request->all());
 

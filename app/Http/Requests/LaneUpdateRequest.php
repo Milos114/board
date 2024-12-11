@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\LaneEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateLaneRequest extends FormRequest
+class LaneUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +28,14 @@ class UpdateLaneRequest extends FormRequest
                 'required',
                 'string',
                 Rule::unique('lanes', 'name')->ignore($this->route('lane')->id),
-                Rule::in(['back_log', 'to_do', 'in_progress', 'done'])
+                Rule::in(
+                    [
+                        LaneEnum::BACK_LOG->value,
+                        LaneEnum::TO_DO->value,
+                        LaneEnum::IN_PROGRESS->value,
+                        LaneEnum::DONE->value
+                    ]
+                )
             ],
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Enums\LaneEnum;
 use App\Models\Lane;
 use App\Models\Ticket;
 use Closure;
@@ -23,9 +24,9 @@ class LaneTransitionRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $validTransitions = match ($this->ticket?->lane->name) {
-            'back_log', 'done' => ['to_do'],
-            'to_do' => ['in_progress'],
-            'in_progress' => ['done'],
+            LaneEnum::BACK_LOG->value, LaneEnum::DONE->value => [LaneEnum::TO_DO->value],
+            LaneEnum::TO_DO->value => [LaneEnum::IN_PROGRESS->value],
+            LaneEnum::IN_PROGRESS->value => [LaneEnum::DONE->value],
             default => [],
         };
 
