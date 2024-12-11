@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class LaneStoreRequest extends FormRequest
+class UpdateLaneRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class LaneStoreRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                Rule::unique('lanes', 'name'),
+                Rule::unique('lanes', 'name')->ignore($this->route('lane')->id),
                 Rule::in(['back_log', 'to_do', 'in_progress', 'done'])
             ],
         ];
