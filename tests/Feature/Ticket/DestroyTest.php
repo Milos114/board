@@ -56,4 +56,21 @@ class DestroyTest extends TestCase
             'user_id' => null,
         ]);
     }
+
+    public function test_ticket_will_have_null_assigned_user_id_after_user_deletion(): void
+    {
+        $this->actingAs($user = User::factory()->create());
+        $ticket = $user->tickets()->create([
+            'title' => 'My ticket',
+            'description' => 'Content of ticket',
+            'assigned_user_id' => $user->id,
+        ]);
+
+        $user->delete();
+
+        $this->assertDatabaseHas('tickets', [
+            'id' => $ticket->id,
+            'assigned_user_id' => null,
+        ]);
+    }
 }
