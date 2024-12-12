@@ -3,6 +3,8 @@
 namespace Tests\Feature\Ticket;
 
 use App\Models\Lane;
+use App\Models\Priority;
+use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -100,5 +102,22 @@ class UpdateTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors(['title', 'description']);
+    }
+
+    public function test_ticket_can_be_assigned_to_user(): void
+    {
+        $this->actingAs($user = User::factory()->create());
+        $ticket = Ticket::factory()->create([
+            'title' => 'My ticket',
+            'description' => 'Content of ticket',
+            'lane_id' => Lane::factory()->create()->id,
+            'priority_id' => Priority::factory()->create()->id,
+            'user_id' => $user->id,
+            'assigned_user_id' => User::factory()->create()->id,
+        ]);
+
+        $this->put("api/{$this->getApiVersion()}/tickets/$ticket->id", $ticket->toArray());
+
+        $this->assertDatabaseHas('tickets', $ticket->toArray());
     }
 }

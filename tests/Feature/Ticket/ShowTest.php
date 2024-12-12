@@ -80,4 +80,26 @@ class ShowTest extends TestCase
 
         $this->assertCount(0, $response->json()['attachments']);
     }
+
+    public function test_assigned_user_data_is_included(): void
+    {
+        $this->actingAs($user = User::factory()->create());
+        $assignedUser = User::factory()->create();
+
+        $ticket = $user->tickets()->create([
+            'title' => 'My ticket',
+            'description' => 'Content of ticket',
+            'assigned_user_id' => $assignedUser->id,
+        ]);
+
+        $response = $this->get("api/{$this->getApiVersion()}/tickets/$ticket->id");
+
+        $response->assertJsonFragment([
+            'assigned_user' => [
+                'id' => $assignedUser->id,
+                'name' => $assignedUser->name,
+                'email' => $assignedUser->email,
+            ],
+        ]);
+    }
 }

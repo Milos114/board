@@ -18,6 +18,7 @@ class TicketResource extends JsonResource
         return [
             'id' => $this->id,
             'user' => UserResource::make($this->whenLoaded('user')),
+            'assigned_user' => UserResource::make($this->whenLoaded('assignedUser')),
             'lane' => LaneResource::make($this->whenLoaded('lane')),
             'priority' => PriorityResource::make($this->whenLoaded('priority')),
             'title' => $this->title,

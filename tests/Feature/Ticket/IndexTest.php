@@ -82,4 +82,22 @@ class IndexTest extends TestCase
         $this->assertArrayHasKey('attachments', $response->json('data.0'));
         $this->assertCount(0, $response->json('data.0.attachments'));
     }
+
+    public function test_assigned_user_data_is_included(): void
+    {
+        $this->actingAs($user = UserFactory::new()->create());
+        $ticket = Ticket::factory()->create([
+            'user_id' => $user->id,
+            'assigned_user_id' => UserFactory::new()->create()->id,
+            'lane_id' => Lane::factory()->create()->id,
+            'priority_id' => null,
+        ]);
+
+        $response = $this->get("api/{$this->getApiVersion()}/tickets");
+
+        $this->assertArrayHasKey('user', $response->json('data.0'));
+        $this->assertArrayHasKey('id', $response->json('data.0.user'));
+        $this->assertArrayHasKey('name', $response->json('data.0.user'));
+        $this->assertArrayHasKey('assigned_user', $response->json('data.0'));
+    }
 }

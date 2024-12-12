@@ -25,7 +25,8 @@ class TicketController extends Controller
         $tickets = Ticket::with([
             'user',
             'lane',
-            'attachments'
+            'attachments',
+            'assignedUser',
         ])->filter();
 
         return TicketResource::collection($tickets);
@@ -43,7 +44,8 @@ class TicketController extends Controller
         $ticket->load([
             'user',
             'lane',
-            'attachments'
+            'attachments',
+            'assignedUser',
         ]);
 
         return response()->json(TicketResource::make($ticket));
@@ -52,8 +54,14 @@ class TicketController extends Controller
     public function update(TicketRequest $request, Ticket $ticket): JsonResponse
     {
         $ticket->update($request->validated());
+        $ticket->load([
+            'user',
+            'lane',
+            'attachments',
+            'assignedUser',
+        ]);
 
-        return response()->json($ticket);
+        return response()->json(TicketResource::make($ticket));
     }
 
     public function destroy(Ticket $ticket): JsonResponse

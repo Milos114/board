@@ -18,6 +18,7 @@ class Ticket extends Model
 
     protected $fillable = [
         'user_id',
+        'assigned_user_id',
         'title',
         'description',
         'lane_id',
@@ -27,6 +28,11 @@ class Ticket extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function assignedUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'assigned_user_id');
     }
 
     public function priority(): BelongsTo

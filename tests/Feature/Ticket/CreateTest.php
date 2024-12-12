@@ -84,4 +84,22 @@ class CreateTest extends TestCase
 
         $this->assertTrue($validator->passes());
     }
+
+    public function test_ticket_can_be_assigned_to_user(): void
+    {
+        $this->actingAs($user = User::factory()->create());
+        $ticket = [
+            'title' => 'My ticket',
+            'description' => 'Content of ticket',
+            'lane_id' => Lane::factory()->create()->id,
+            'priority_id' => Priority::factory()->create()->id,
+            'user_id' => $user->id,
+            'assigned_user_id' => User::factory()->create()->id,
+        ];
+
+        $response = $this->post("api/{$this->getApiVersion()}/tickets", $ticket);
+
+        $response->assertStatus(Response::HTTP_CREATED);
+        $this->assertDatabaseHas('tickets', $ticket);
+    }
 }

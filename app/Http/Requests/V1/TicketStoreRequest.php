@@ -23,6 +23,7 @@ class TicketStoreRequest extends FormRequest
     {
         return [
             'user_id' => 'nullable|exists:users,id',
+            'assigned_user_id' => 'nullable|exists:users,id',
             'title' => 'required|string',
             'description' => 'required|string',
             'lane_id' => ['nullable', 'numeric'],
