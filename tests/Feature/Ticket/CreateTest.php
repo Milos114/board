@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Ticket;
 
-use App\Http\Requests\TicketRequest;
-use App\Models\Priority;
+use App\Http\Requests\V1\TicketRequest;
 use App\Models\Lane;
+use App\Models\Priority;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Validator;

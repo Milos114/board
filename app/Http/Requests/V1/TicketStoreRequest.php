@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1;
 
-use App\Rules\LaneTransitionRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TicketStoreRequest extends FormRequest

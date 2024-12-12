@@ -20,23 +20,11 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy')->middleware('can:delete,user');
 
     // Tickets
-    Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
-    Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
-    Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
-    Route::put('/tickets/{ticket}', [TicketController::class, 'update'])->name('tickets.update');
-    Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy'])->name('tickets.destroy');
+    Route::apiResource('tickets', TicketController::class);
 
     // Lanes
-    Route::get('/lanes', [LaneController::class, 'index'])->name('states.index');
-    Route::post('/lanes', [LaneController::class, 'store'])->name('states.store');
-    Route::get('/lanes/{lane}', [LaneController::class, 'show'])->name('states.show');
-    Route::put('/lanes/{lane}', [LaneController::class, 'update'])->name('states.update');
-    Route::delete('/lanes/{lane}', [LaneController::class, 'destroy'])->name('states.destroy');
+    Route::apiResource('lanes', LaneController::class);
 
     // Priorities
-    Route::get('/priorities', [PriorityController::class, 'index'])->name('priorities.index');
-    Route::post('/priorities', [PriorityController::class, 'store'])->name('priorities.store');
-    Route::put('/priorities/{priority}', [PriorityController::class, 'update'])->name('priorities.update');
-    Route::get('/priorities/{priority}', [PriorityController::class, 'show'])->name('priorities.show');
-    Route::delete('/priorities/{priority}', [PriorityController::class, 'destroy'])->name('priorities.destroy');
+    Route::apiResource('priorities', PriorityController::class);
 });

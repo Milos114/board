@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserStoreRequest;
-use App\Http\Requests\UserUpdateRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Requests\V1\UserStoreRequest;
+use App\Http\Requests\V1\UserUpdateRequest;
+use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

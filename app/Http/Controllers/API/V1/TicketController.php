@@ -4,10 +4,10 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Actions\TicketCreateAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SearchRequest;
-use App\Http\Requests\TicketRequest;
-use App\Http\Requests\TicketStoreRequest;
-use App\Http\Resources\TicketResource;
+use App\Http\Requests\V1\SearchRequest;
+use App\Http\Requests\V1\TicketRequest;
+use App\Http\Requests\V1\TicketStoreRequest;
+use App\Http\Resources\V1\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

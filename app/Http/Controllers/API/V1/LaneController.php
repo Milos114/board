@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LaneStoreRequest;
-use App\Http\Requests\LaneUpdateRequest;
-use App\Http\Resources\LaneResource;
+use App\Http\Requests\V1\LaneStoreRequest;
+use App\Http\Requests\V1\LaneUpdateRequest;
+use App\Http\Resources\V1\LaneResource;
 use App\Models\Lane;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

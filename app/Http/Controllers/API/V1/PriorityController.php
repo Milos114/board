@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PriorityRequest;
-use App\Http\Resources\PriorityResource;
+use App\Http\Requests\V1\PriorityRequest;
+use App\Http\Resources\V1\PriorityResource;
 use App\Models\Priority;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
