@@ -27,7 +27,7 @@ class LaneUpdateRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                Rule::unique('lanes', 'name')->ignore($this->route('lane')->id),
+                Rule::unique('lanes', 'name')->ignore($this->route('lane')),
                 Rule::in(
                     [
                         LaneEnum::BACK_LOG->value,

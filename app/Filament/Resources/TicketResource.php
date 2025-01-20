@@ -2,11 +2,15 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Exports\TicketExporter;
 use App\Filament\Resources\TicketResource\Pages;
 use App\Filament\Resources\TicketResource\RelationManagers;
 use App\Models\Ticket;
+use Filament\Actions\ViewAction;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -23,20 +27,7 @@ class TicketResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name'),
-                Forms\Components\Select::make('assigned_user_id')
-                    ->relationship('assignedUser', 'name'),
-                Forms\Components\Select::make('lane_id')
-                    ->relationship('lane', 'name'),
-                Forms\Components\Select::make('priority_id')
-                    ->relationship('priority', 'name'),
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->required()
-                    ->columnSpanFull(),
+                //
             ]);
     }
 
@@ -72,12 +63,31 @@ class TicketResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+            ])
+            ->headerActions([
+                Tables\Actions\ExportAction::make()->exporter(TicketExporter::class),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ExportAction::make()->exporter(TicketExporter::class),
                 ]),
+            ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                TextEntry::make('title'),
+                TextEntry::make('description'),
+                TextEntry::make('user.email'),
+                TextEntry::make('assignedUser.email'),
+                TextEntry::make('lane.name'),
+                TextEntry::make('priority.name')
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -93,6 +103,7 @@ class TicketResource extends Resource
         return [
             'index' => Pages\ListTickets::route('/'),
             'create' => Pages\CreateTicket::route('/create'),
+//            'view' => Pages\ViewTicket::route('/{record}'),
             'edit' => Pages\EditTicket::route('/{record}/edit'),
         ];
     }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -45,13 +44,23 @@ class RegisterController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
      * @unauthenticated
      */
     public function login(Request $request): JsonResponse
     {
-        $credentials = request(['email', 'password']);
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-        if (! $token = auth()->attempt($credentials)) {
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+
+        if (! $token = auth()->attempt($request->only('email', 'password'))) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 

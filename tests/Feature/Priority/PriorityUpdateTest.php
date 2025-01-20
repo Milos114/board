@@ -4,10 +4,13 @@ namespace Tests\Feature\Priority;
 
 use App\Models\Priority;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PriorityUpdateTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_priority_can_be_updated(): void
     {
         $this->actingAs(User::factory()->create());
