@@ -9,6 +9,7 @@ use App\Http\Resources\V1\LaneResource;
 use App\Models\Lane;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -20,9 +21,11 @@ class LaneController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        $states = Lane::filter()->get();
+        $lanes = Cache::remember('lanes', 60, static function () {
+            return Lane::filter()->get();
+        });
 
-        return LaneResource::collection($states);
+        return LaneResource::collection($lanes);
     }
 
     public function store(LaneStoreRequest $request): JsonResponse
