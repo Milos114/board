@@ -82,11 +82,17 @@ class RegistrationTest extends TestCase
 
     public function test_user_can_logout(): void
     {
-        $token = auth()->login(User::factory()->create());
+        $user = User::factory()->create();
+        $token = $this->actingAs($user)
+            ->post('/api/login', [
+                'email' => $user->email,
+                'password' => 'password',
+            ])->json('access_token');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
             ->postJson('/api/logout');
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+            ->assertJson(['message' => 'Successfully logged out']);
     }
 }
