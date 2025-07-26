@@ -305,4 +305,78 @@ class LaneTransitionRuleTest extends TestCase
         // Should pass when ticket is null (for new tickets)
         $this->assertTrue($passes);
     }
+
+    /** @test */
+    public function test_rule_allows_staying_in_custom_lane(): void
+    {
+        $customLane = Lane::factory()->create(['name' => 'custom_lane']);
+        
+        $ticket = Ticket::factory()->create(['lane_id' => $customLane->id]);
+        
+        $rule = new LaneTransitionRule($ticket);
+        
+        $passes = true;
+        $rule->validate('lane_id', $customLane->id, function($message) use (&$passes) {
+            $passes = false;
+        });
+        
+        // Should pass when staying in the same custom lane
+        $this->assertTrue($passes);
+    }
+
+    /** @test */
+    public function test_rule_blocks_transition_from_custom_lane_to_any_other_lane(): void
+    {
+        $customLane = Lane::factory()->create(['name' => 'custom_lane']);
+        $todoLane = Lane::factory()->create(['name' => LaneEnum::TO_DO->value]);
+        
+        $ticket = Ticket::factory()->create(['lane_id' => $customLane->id]);
+        
+        $rule = new LaneTransitionRule($ticket);
+        
+        $passes = true;
+        $errorMessage = '';
+        $rule->validate('lane_id', $todoLane->id, function($message) use (&$passes, &$errorMessage) {
+            $passes = false;
+            $errorMessage = $message;
+        });
+        
+        // Should fail when trying to move from custom lane to any other lane
+        $this->assertFalse($passes);
+        $this->assertStringContainsString('Cannot move ticket from custom_lane to to_do', $errorMessage);
+    }
+
+    /** @test */
+    public function test_rule_blocks_transition_from_custom_lane_to_multiple_standard_lanes(): void
+    {
+        $customLane = Lane::factory()->create(['name' => 'review']);
+        $backlogLane = Lane::factory()->create(['name' => LaneEnum::BACK_LOG->value]);
+        $inProgressLane = Lane::factory()->create(['name' => LaneEnum::IN_PROGRESS->value]);
+        $doneLane = Lane::factory()->create(['name' => LaneEnum::DONE->value]);
+        
+        $ticket = Ticket::factory()->create(['lane_id' => $customLane->id]);
+        
+        $rule = new LaneTransitionRule($ticket);
+        
+        // Test transition to backlog
+        $passes = true;
+        $rule->validate('lane_id', $backlogLane->id, function($message) use (&$passes) {
+            $passes = false;
+        });
+        $this->assertFalse($passes);
+        
+        // Test transition to in_progress
+        $passes = true;
+        $rule->validate('lane_id', $inProgressLane->id, function($message) use (&$passes) {
+            $passes = false;
+        });
+        $this->assertFalse($passes);
+        
+        // Test transition to done
+        $passes = true;
+        $rule->validate('lane_id', $doneLane->id, function($message) use (&$passes) {
+            $passes = false;
+        });
+        $this->assertFalse($passes);
+    }
 }
