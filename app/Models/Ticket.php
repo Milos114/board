@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\QueryFilters\AssignedUserFilter;
+use App\QueryFilters\PriorityFilter;
 use App\QueryFilters\SearchFilter;
 use App\QueryFilters\StatusFilter;
 use App\QueryFilters\UserFilter;
@@ -57,6 +59,8 @@ class Ticket extends Model
                 SearchFilter::class,
                 StatusFilter::class,
                 UserFilter::class,
+                AssignedUserFilter::class,
+                PriorityFilter::class,
             ])
             ->then(fn($query) => $query->paginate());
     }
