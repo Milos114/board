@@ -103,7 +103,7 @@ class LaneTransitionRuleTest extends TestCase
         });
         
         $this->assertFalse($passes);
-        $this->assertStringContains('Cannot move ticket from back_log to in_progress', $errorMessage);
+        $this->assertStringContainsString('Cannot move ticket from back_log to in_progress', $errorMessage);
     }
 
     /** @test */
@@ -124,7 +124,7 @@ class LaneTransitionRuleTest extends TestCase
         });
         
         $this->assertFalse($passes);
-        $this->assertStringContains('Cannot move ticket from back_log to done', $errorMessage);
+        $this->assertStringContainsString('Cannot move ticket from back_log to done', $errorMessage);
     }
 
     /** @test */
@@ -145,7 +145,7 @@ class LaneTransitionRuleTest extends TestCase
         });
         
         $this->assertFalse($passes);
-        $this->assertStringContains('Cannot move ticket from to_do to back_log', $errorMessage);
+        $this->assertStringContainsString('Cannot move ticket from to_do to back_log', $errorMessage);
     }
 
     /** @test */
@@ -166,7 +166,7 @@ class LaneTransitionRuleTest extends TestCase
         });
         
         $this->assertFalse($passes);
-        $this->assertStringContains('Cannot move ticket from to_do to done', $errorMessage);
+        $this->assertStringContainsString('Cannot move ticket from to_do to done', $errorMessage);
     }
 
     /** @test */
@@ -187,7 +187,7 @@ class LaneTransitionRuleTest extends TestCase
         });
         
         $this->assertFalse($passes);
-        $this->assertStringContains('Cannot move ticket from in_progress to back_log', $errorMessage);
+        $this->assertStringContainsString('Cannot move ticket from in_progress to back_log', $errorMessage);
     }
 
     /** @test */
@@ -208,7 +208,7 @@ class LaneTransitionRuleTest extends TestCase
         });
         
         $this->assertFalse($passes);
-        $this->assertStringContains('Cannot move ticket from in_progress to to_do', $errorMessage);
+        $this->assertStringContainsString('Cannot move ticket from in_progress to to_do', $errorMessage);
     }
 
     /** @test */
@@ -229,7 +229,7 @@ class LaneTransitionRuleTest extends TestCase
         });
         
         $this->assertFalse($passes);
-        $this->assertStringContains('Cannot move ticket from done to back_log', $errorMessage);
+        $this->assertStringContainsString('Cannot move ticket from done to back_log', $errorMessage);
     }
 
     /** @test */
@@ -250,7 +250,7 @@ class LaneTransitionRuleTest extends TestCase
         });
         
         $this->assertFalse($passes);
-        $this->assertStringContains('Cannot move ticket from done to in_progress', $errorMessage);
+        $this->assertStringContainsString('Cannot move ticket from done to in_progress', $errorMessage);
     }
 
     /** @test */
@@ -287,7 +287,7 @@ class LaneTransitionRuleTest extends TestCase
         });
         
         $this->assertFalse($passes);
-        $this->assertStringContains('Invalid lane ID: 99999', $errorMessage);
+        $this->assertStringContainsString('Invalid lane ID: 99999', $errorMessage);
     }
 
     /** @test */

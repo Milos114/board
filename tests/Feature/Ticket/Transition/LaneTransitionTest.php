@@ -9,6 +9,7 @@ use App\Models\Priority;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class LaneTransitionTest extends TestCase
@@ -276,12 +277,22 @@ class LaneTransitionTest extends TestCase
     /** @test */
     public function test_unauthenticated_user_cannot_transition_ticket_lanes(): void
     {
-        $this->actingAs(null); // Remove authentication
         $ticket = $this->createTicketInLane($this->todoLane);
 
-        $response = $this->putJsonTicketUpdate($ticket, ['lane_id' => $this->inProgressLane->id]);
+        // Reset authentication state properly for JWT
+        $this->app['auth']->forgetGuards();
+        
+        $response = $this->putJson("api/{$this->getApiVersion()}/tickets/{$ticket->id}", [
+            'title' => $ticket->title,
+            'description' => $ticket->description,
+            'lane_id' => $this->inProgressLane->id,
+        ], [
+            'Accept' => 'application/json',
+            // Explicitly don't include authorization header
+        ]);
 
-        $response->assertUnauthorized();
+        // Based on the JWT exception, check for the appropriate error response
+        $response->assertStatus(401);
     }
 
     /**

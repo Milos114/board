@@ -23,7 +23,12 @@ readonly class LaneTransitionRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $validTransitions = match ($this->ticket?->lane->name) {
+        // For new tickets (when ticket is null), allow any lane
+        if ($this->ticket === null) {
+            return;
+        }
+        
+        $validTransitions = match ($this->ticket->lane->name) {
             LaneEnum::BACK_LOG->value, LaneEnum::DONE->value => [LaneEnum::TO_DO->value],
             LaneEnum::TO_DO->value => [LaneEnum::IN_PROGRESS->value],
             LaneEnum::IN_PROGRESS->value => [LaneEnum::DONE->value],
@@ -38,7 +43,7 @@ readonly class LaneTransitionRule implements ValidationRule
         
         $newLaneName = $newLane->name;
 
-        if ($newLaneName === $this->ticket?->lane->name) {
+        if ($newLaneName === $this->ticket->lane->name) {
             return;
         }
 
