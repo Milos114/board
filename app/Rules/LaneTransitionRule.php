@@ -30,14 +30,20 @@ readonly class LaneTransitionRule implements ValidationRule
             default => [],
         };
 
-        $newLane = Lane::find($value)->name;
+        $newLane = Lane::find($value);
+        if (!$newLane) {
+            $fail("Invalid lane ID: $value");
+            return;
+        }
+        
+        $newLaneName = $newLane->name;
 
-        if ($newLane === $this->ticket?->lane->name) {
+        if ($newLaneName === $this->ticket?->lane->name) {
             return;
         }
 
-        if (!in_array($newLane, $validTransitions, true)) {
-            $fail("Cannot move ticket from {$this->ticket->lane->name} to $newLane");
+        if (!in_array($newLaneName, $validTransitions, true)) {
+            $fail("Cannot move ticket from {$this->ticket->lane->name} to $newLaneName");
         }
     }
 }
