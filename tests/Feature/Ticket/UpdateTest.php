@@ -118,6 +118,10 @@ class UpdateTest extends TestCase
 
         $this->put("api/{$this->getApiVersion()}/tickets/$ticket->id", $ticket->toArray());
 
-        $this->assertDatabaseHas('tickets', $ticket->toArray());
+        // Check database excluding timestamp fields to avoid format mismatch
+        $expectedData = $ticket->only([
+            'user_id', 'title', 'description', 'lane_id', 'priority_id', 'assigned_user_id', 'id'
+        ]);
+        $this->assertDatabaseHas('tickets', $expectedData);
     }
 }
