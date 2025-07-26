@@ -23,7 +23,7 @@ class SearchRequest extends FormRequest
     {
         return [
             'filter' => ['array', function ($attribute, $value, $fail) {
-                $allowedKeys = ['search', 'state', 'user'];
+                $allowedKeys = ['search', 'state', 'user', 'assigned_user', 'priority'];
                 foreach (array_keys($value) as $key) {
                     if (!in_array($key, $allowedKeys, true)) {
                         $fail("The {$attribute} field contains an invalid key: {$key}.");
@@ -33,6 +33,8 @@ class SearchRequest extends FormRequest
             'filter.search' => ['nullable', 'string'],
             'filter.state' => ['nullable', 'integer'],
             'filter.user' => ['nullable', 'integer'],
+            'filter.assigned_user' => ['nullable', 'integer'],
+            'filter.priority' => ['nullable', 'integer'],
         ];
     }
 }
